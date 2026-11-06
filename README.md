@@ -1,4 +1,4 @@
-# ALTEZ Vrachtplanner V2
+# Vrachtplanner V2
 
 Trimble Connect 3D Viewer-extensie voor prefab-vrachtlijsten (PDF -> IFC assemblies).
 
