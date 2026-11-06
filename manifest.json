@@ -1,8 +1,8 @@
 {
-  "title": "Altez Vrachtplanner",
+  "title": "Vrachtplanner",
   "description": "Importeer een PDF-vrachtlijst, koppel elementnummers aan de Cast Unit Mark van Tekla-assemblies en visualiseer vrachten met kleuren en één label per vracht.",
-  "url": "https://ictaltez.github.io/Altez_Vrachtindeling/index.html",
-  "icon": "https://ictaltez.github.io/Altez_Vrachtindeling/icon.svg",
+  "url": "https://jonasvanhecke-98.github.io/Vrachtindeling/index.html",
+  "icon": "https://jonasvanhecke-98.github.io/Vrachtindeling/icon.svg",
   "enabled": true,
   "extensionType": ["3dviewer"]
 }
