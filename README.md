@@ -1,30 +1,28 @@
-# Vrachtplanner V2
+# Altez Vrachtplanner V3 - Trimble Connect extensie
 
-Trimble Connect 3D Viewer-extensie voor prefab-vrachtlijsten (PDF -> IFC assemblies).
+## Wat is veranderd?
+
+- Foutieve propertyset-toegang `set.set` hersteld: de Workspace API gebruikt `PropertySet.name`.
+- Detecteert assemblages via de modelobjectklasse en leest `getObjectProperties` per model en runtime-ID.
+- Extra scan voor viewers die IFC-classes anders teruggeven; geen fallback naar `Default.comment` of losse onderdeelparameters.
+- Ingebouwde Hydroos-voorbeeldlijst, herstelknop en verplichte prefix verwijderd.
+- De gebruiker importeert altijd eerst een tekstgebaseerde PDF-vrachtlijst.
+- 1 tekstmarkup per vracht, kleur op de volledige assembly en assembly-kinderen.
 
 ## Installatie
 
-1. Maak/bewerk de GitHub repository `ictaltez/Altez_Vrachtindeling`.
-2. Upload `index.html`, `manifest.json` en `icon.svg` in de root van die repo.
-3. Activeer GitHub Pages vanaf de main branch (root).
-4. Controleer of `https://ictaltez.github.io/Altez_Vrachtindeling/manifest.json` bereikbaar is.
-5. Voeg deze manifest URL als Custom Extension toe aan het Trimble Connect project en open het IFC-model in de 3D Viewer.
+Upload `index.html`, `manifest.json` en `icon.svg` naar de root van `ictaltez/Altez_Vrachtindeling`, met GitHub Pages actief. Gebruik in Trimble Connect de manifest-URL:
 
-## Gebruik
+`https://ictaltez.github.io/Altez_Vrachtindeling/manifest.json`
 
-- Kies een PDF-vrachtlijst, of gebruik de ingebouwde Hydroos-voorbeeldlijst (12 vrachten, 72 elementen).
-- Vul de prefix van de elementnummers in (bijvoorbeeld HYD). Een tekstgebaseerde PDF met herkenbare koppen `Vracht 01`, `ElementNr` is nodig; scans zijn niet ondersteund.
-- Kies het geladen model, klik `Koppel en kleur vrachten`.
-- De tool zoekt UITSLUITEND `IfcElementAssembly` met propertyset `Tekla Assembly` en eigenschap `Assembly/Cast unit Mark`. Als de Viewer dit propertyset niet ontsluit, meldt de tool geen match.
-- De volledige assembly en onderliggende onderdelen (assembly-hiërarchie type 4) worden gekleurd. Eén gekleurde tekstmarkup per vracht (indien de positie via de API beschikbaar is).
-- Klik op een vracht om de merken te bekijken, te selecteren of te focussen. De volgordeweergave selecteert de vrachten achtereenvolgens; het is geen 4D-datumplanning.
-- `Wis Altez-kleuren` verwijdert eigen kleuren en labels. Eventuele eerder bestaande kleuren worden zo goed mogelijk hersteld.
+## Werking
 
-## Grenzen huidige versie
+1. Open IFC-model in Trimble Connect 3D Viewer.
+2. Importeer PDF met vrachtkopjes en de kolom **ElementNr**.
+3. Kies geladen model, klik **Koppel en kleur vrachten**.
+4. De extensie leest uitsluitend `Tekla Assembly -> Assembly/Cast unit Mark` op `IfcElementAssembly`.
+5. Bij iedere vracht een kleur en maximaal één tekstmarkup, met focus/selectie vanuit de lijst.
 
-- De echte Trimble Connect Viewer en de positionering van 3D-labels zijn niet live getest.
-- PDF-interpretatie ondersteunt tekst-PDF's en leverancierlayout vergelijkbaar met de meegeleverde Hydroos-lijst, geen gescande PDF's zonder tekstlaag.
-- Laden van een PDF gebeurt alleen lokaal in de browser, niet rechtstreeks vanuit een Trimble-projectmap.
-- Geen opslag als Trimble View, geen A3/PDF-export of afbeeldingsexport.
-- Bij meerdere geladen modellen best één model kiezen om onbedoelde dubbele matches te voorkomen.
-- Door browser-CDN's zijn internetverbindingen met `components.connect.trimble.com` en `cdnjs.cloudflare.com` vereist.
+## Nog live te controleren
+
+De exacte weergave van assembly-kinderen en positie van tekstmarkups is afhankelijk van de daadwerkelijke geladen Trimble Viewer en blijft een live praktijktest. PDF-scans zonder selecteerbare tekst worden niet ondersteund. De vrachtkleuren worden niet in de IFC opgeslagen. Deze extensie slaat geen Trimble Views op en exporteert geen A3/PDF.

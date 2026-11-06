@@ -20,35 +20,34 @@
 <div class="top"><div class="topline"><div class="brand">ALTEZ <em>Vrachtplanner</em></div><span id="connection" class="pill off">Niet verbonden</span></div><div class="subhead">Prefab-vrachten visueel koppelen aan assemblies in de 3D Viewer</div></div>
 <main class="shell">
   <section class="section"><div class="sectionBody">
-    <div class="heading"><span><span class="index">1</span> Importeer vrachtlijst</span><span id="sourceTag" class="tag">Hydroos-voorbeeld</span></div>
-    <label id="dropzone" class="drop" for="pdfFile"><span class="dropIcon">▤</span><span><strong id="pdfTitle">OR20250240 Hydroos — 12 vrachten</strong><small id="pdfDetail">72 elementen vooraf ingeladen · klik of sleep een PDF hierheen</small></span><input id="pdfFile" type="file" accept="application/pdf,.pdf"></label>
-    <div class="row space" style="margin-top:10px"><div style="flex:1;min-width:0"><label class="label" for="prefix">Prefix elementnummer</label><input id="prefix" class="input" value="HYD" placeholder="bv. HYD, PW, W" maxlength="16"></div><button id="sampleBtn" class="ghostBtn" style="margin-top:17px">Herstel voorbeeld</button></div>
+    <div class="heading"><span><span class="index">1</span> Importeer vrachtlijst</span><span id="sourceTag" class="tag warn">Nog geen PDF</span></div>
+    <label id="dropzone" class="drop" for="pdfFile"><span class="dropIcon">▤</span><span><strong id="pdfTitle">Selecteer een PDF-vrachtlijst</strong><small id="pdfDetail">Sleep een tekst-PDF hierheen of klik om te importeren</small></span><input id="pdfFile" type="file" accept="application/pdf,.pdf"></label>
+    <div class="mini" style="margin-top:9px">Elementnummers worden automatisch uit de PDF herkend; een prefix is niet nodig.</div>
   </div></section>
   <section class="section"><div class="sectionBody">
     <div class="heading"><span><span class="index">2</span> Koppel aan model</span><span id="modelState" class="tag warn">Controleren</span></div>
     <div class="modelLabel">Matching: <strong>IfcElementAssembly → Tekla Assembly → Assembly/Cast unit Mark</strong>. Geen commentaar- of onderdeelparameters.</div>
     <label class="label" for="modelSelect">Te doorzoeken geladen model</label><select id="modelSelect"><option value="">Alle geladen modellen</option></select>
     <div class="checks"><label><input id="labels" type="checkbox" checked> Eén label per vracht, in vrachtkleur</label><label><input id="grey" type="checkbox"> Niet-gekoppelde assemblies grijs kleuren</label></div>
-    <button id="runBtn" class="mainBtn">▶ &nbsp; Koppel en kleur vrachten</button>
+    <button id="runBtn" class="mainBtn" disabled>▶ &nbsp; Koppel en kleur vrachten</button>
     <div class="progress" id="progress"><div id="progressInner"></div></div>
     <div class="row space" style="margin:11px 0"><button class="ghostBtn" id="resetBtn">↺ Wis Altez-kleuren</button><button class="ghostBtn" id="reconnectBtn">↻ Modellen vernieuwen</button></div>
     <div id="status" class="status">Verbinding wordt gecontroleerd...</div>
   </div></section>
   <section class="section">
     <div class="sectionBody"><div class="heading"><span><span class="index">3</span> Vrachtenoverzicht</span><span id="resultTag" class="tag">Nog niet gekoppeld</span></div>
-      <div class="stats"><div class="stat"><strong id="statLoads">12</strong><span>Vrachten</span></div><div class="stat"><strong id="statMatched">—</strong><span>Gekoppelde merken</span></div><div class="stat"><strong id="statMissing">—</strong><span>Niet gevonden</span></div></div>
+      <div class="stats"><div class="stat"><strong id="statLoads">0</strong><span>Vrachten</span></div><div class="stat"><strong id="statMatched">—</strong><span>Gekoppelde merken</span></div><div class="stat"><strong id="statMissing">—</strong><span>Niet gevonden</span></div></div>
     </div>
     <div class="listHeader"><span>Vrachten en merken</span><span class="mini">Klik om te openen</span></div>
     <div id="cards" class="cards"></div><div id="warnings" class="warning"></div>
   </section>
-  <section class="timeline"><div class="tlTitle"><span>Volgordeweergave</span><span id="timelineText" class="tlNote">Alle vrachten</span></div><input id="timelineSlider" class="range" type="range" min="0" max="12" step="1" value="0"><div class="transport"><button class="control" id="first" title="Alle vrachten">↤</button><button class="control" id="prev" title="Vorige vracht">◀</button><button class="control play" id="play" title="Vrachten één voor één selecteren">▶</button><button class="control" id="next" title="Volgende vracht">▶|</button><button class="ghostBtn" id="allBtn">Alles tonen</button></div><div class="tlNote" style="text-align:center;margin-top:8px">Selecteert de vracht in 3D; wijzigt geen montagedata of planning.</div></section>
-  <div class="foot">De PDF wordt in je browser gelezen. Er worden geen bestanden geüpload naar een Altez-server. Kleuren en labels zijn tijdelijke weergave-elementen. Een Trimble View opslaan of PDF/A3 exporteren is bewust niet toegevoegd.</div>
+  <section class="timeline"><div class="tlTitle"><span>Volgordeweergave</span><span id="timelineText" class="tlNote">Alle vrachten</span></div><input id="timelineSlider" class="range" type="range" min="0" max="0" step="1" value="0" disabled><div class="transport"><button class="control" id="first" title="Alle vrachten">↤</button><button class="control" id="prev" title="Vorige vracht">◀</button><button class="control play" id="play" title="Vrachten één voor één selecteren">▶</button><button class="control" id="next" title="Volgende vracht">▶|</button><button class="ghostBtn" id="allBtn">Alles tonen</button></div><div class="tlNote" style="text-align:center;margin-top:8px">Selecteert de vracht in 3D; wijzigt geen montagedata of planning.</div></section>
+  <div class="foot">De geïmporteerde PDF wordt lokaal in je browser gelezen. Er worden geen bestanden naar een Altez-server geüpload. Kleuren en labels zijn tijdelijke weergave-elementen. Een Trimble View opslaan of PDF/A3 exporteren is bewust niet toegevoegd.</div>
 </main>
 <script>
 'use strict';
-// ALTEZ VRACHTPLANNER V2. Eén zelfstandig HTML-bestand, direct geschikt voor GitHub Pages.
+// ALTEZ VRACHTPLANNER V3. Eén zelfstandig HTML-bestand, direct geschikt voor GitHub Pages.
 // Matcht UITSLUITEND de property Tekla Assembly / Assembly/Cast unit Mark van IfcElementAssembly.
-const SAMPLE=[{number:1,marks:['HYD001','HYD002','HYD003','HYD005','HYD008']},{number:2,marks:['HYD004','HYD006','HYD007','HYD018','HYD019','HYD020','HYD021','HYD031','HYD035','HYD036','HYD037']},{number:3,marks:['HYD009','HYD010','HYD011','HYD012']},{number:4,marks:['HYD013','HYD014','HYD015','HYD016','HYD017']},{number:5,marks:['HYD022','HYD023','HYD024']},{number:6,marks:['HYD025','HYD026','HYD027','HYD028','HYD029']},{number:7,marks:['HYD030','HYD032','HYD033','HYD034','HYD038']},{number:8,marks:['HYD039','HYD040','HYD041','HYD042']},{number:9,marks:['HYD043','HYD044','HYD047','HYD048']},{number:10,marks:['HYD045','HYD046','HYD050','HYD052','HYD053','HYD055','HYD057','HYD059','HYD061','HYD064','HYD065','HYD066','HYD067','HYD068','HYD069','HYD070','HYD071','HYD072']},{number:11,marks:['HYD049','HYD051','HYD054','HYD056']},{number:12,marks:['HYD058','HYD060','HYD062','HYD063']}];
 const COLORS=['#3478DB','#EF8B36','#1BAA80','#9A65D5','#D9B32B','#22A9C4','#E264A3','#C75B59','#5367BC','#7FAA3D','#BB7843','#457C9B'];
 const $=id=>document.getElementById(id);
 const state={api:null,shipments:[],index:new Map(),matchedMarks:new Set(),applied:new Map(),grey:[],originalColors:new Map(),labelIds:[],isApplied:false,busy:false,step:0,timer:null,availableModels:[]};
@@ -58,20 +57,87 @@ function uniq(arr){return [...new Set(arr)];}
 function hexRgba(hex){const h=hex.slice(1);return{r:parseInt(h.slice(0,2),16),g:parseInt(h.slice(2,4),16),b:parseInt(h.slice(4,6),16),a:255};}
 function setStatus(s,cls=''){const e=$('status');e.className='status'+(cls?' '+cls:'');e.textContent=s;}
 function setProgress(n,text){$('progress').style.display='block';$('progressInner').style.width=n+'%';if(text)setStatus(text);}
-function isBusy(v){state.busy=v;for(const id of ['runBtn','resetBtn','reconnectBtn','pdfFile','sampleBtn','modelSelect'])$(id).disabled=v;if(!v)$('progress').style.display='none';}
+function isBusy(v){state.busy=v;for(const id of ['resetBtn','reconnectBtn','pdfFile','modelSelect'])$(id).disabled=v;$('runBtn').disabled=v||!state.shipments.length;if(!v)$('progress').style.display='none';}
 function normaliseShipments(rows){const seen=new Map();return rows.map((r,i)=>({number:Number(r.number||i+1),label:`Vracht ${String(r.number||i+1).padStart(2,'0')}`,marks:uniq((r.marks||[]).map(normalize).filter(Boolean))})).filter(x=>x.marks.length).sort((a,b)=>a.number-b.number).map((g,i)=>{g.color=COLORS[i%COLORS.length];for(const mark of g.marks){if(seen.has(mark))throw new Error(`${mark} staat op zowel ${seen.get(mark)} als ${g.label}`);seen.set(mark,g.label);}return g;});}
-function setShipments(rows){state.shipments=normaliseShipments(rows);state.index=new Map();state.matchedMarks=new Set();state.isApplied=false;state.step=0;$('statLoads').textContent=state.shipments.length;$('statMatched').textContent='—';$('statMissing').textContent='—';$('resultTag').textContent='Nog niet gekoppeld';$('timelineSlider').max=state.shipments.length;$('timelineSlider').value=0;$('timelineText').textContent='Alle vrachten';$('warnings').style.display='none';renderCards();}
+function setShipments(rows){state.shipments=normaliseShipments(rows);state.index=new Map();state.matchedMarks=new Set();state.isApplied=false;state.step=0;$('statLoads').textContent=state.shipments.length;$('statMatched').textContent='—';$('statMissing').textContent='—';$('resultTag').textContent='Nog niet gekoppeld';$('timelineSlider').max=state.shipments.length;$('timelineSlider').value=0;$('timelineSlider').disabled=!state.shipments.length;$('runBtn').disabled=!state.shipments.length;$('timelineText').textContent='Alle vrachten';$('warnings').style.display='none';renderCards();}
 function renderCards(){const out=$('cards');const open=uniq([...out.querySelectorAll('.card.open')].map(x=>x.dataset.number));out.replaceChildren();for(const g of state.shipments){const entries=state.index.get(g.number)||[];const found=uniq(entries.map(x=>x.mark));const card=document.createElement('div');card.className='card'+(open.includes(String(g.number))?' open':'')+(state.step&&state.shipments[state.step-1]?.number===g.number?' active':'');card.dataset.number=g.number;
  const head=document.createElement('div');head.className='cardhead';head.onclick=()=>card.classList.toggle('open');const sw=document.createElement('span');sw.className='swatch';sw.style.background=g.color;const main=document.createElement('div');main.className='cardmain';const title=document.createElement('div');title.className='ctitle';const a=document.createElement('span');a.textContent=g.label;const b=document.createElement('span');b.style.color='#65809b';b.textContent=state.isApplied?`${found.length}/${g.marks.length}`:`${g.marks.length} elementen`;title.append(a,b);const sub=document.createElement('div');sub.className='csub';sub.textContent=state.isApplied?`${entries.length} assemblies · ${g.marks.length-found.length} ontbrekend`:'Volgens PDF-vrachtlijst';main.append(title,sub);const chev=document.createElement('span');chev.className='chevron';chev.textContent='⌄';head.append(sw,main,chev);
  const detail=document.createElement('div');detail.className='carddetail';const chips=document.createElement('div');chips.className='chips';for(const mark of g.marks){const chip=document.createElement('span');chip.className='chip';chip.textContent=mark;if(state.isApplied&&!state.matchedMarks.has(mark)){chip.style.borderColor='#efc49c';chip.style.background='#fff5ec';}chips.append(chip);}const actions=document.createElement('div');actions.className='actions';for(const [text,zoom] of [['Selecteer vracht',false],['Focus op vracht',true]]){const btn=document.createElement('button');btn.textContent=text;btn.disabled=!state.isApplied||!entries.length;btn.onclick=()=>selectGroup(g,zoom);actions.append(btn);}detail.append(chips,actions);card.append(head,detail);out.append(card);}}
 function loadedObjectsToArray(groups){const out=[];for(const group of groups||[])for(const item of group.objects||[])out.push({...item,modelId:group.modelId});return out;}
 function groupedByModel(arr){const out=new Map();for(const x of arr){if(!out.has(x.modelId))out.set(x.modelId,new Map());out.get(x.modelId).set(x.id,x);}return out;}
-function isAssembly(obj){const values=[obj.class,obj.product?.objectType,obj.product?.name].map(x=>String(x||'')).join(' ');return /ifc\s*element\s*assembly|elementassembly/i.test(values);}
-function hasClass(obj){return !!(obj.class||obj.product?.objectType);}
-function castUnitMark(obj){for(const set of obj.properties||[]){if(squish(set.set)!=='teklaassembly')continue;for(const prop of set.properties||[]){if(squish(prop.name)==='assemblycastunitmark')return normalize(prop.value);}}return '';}
+function isAssembly(obj){
+  const kind=[obj?.class,obj?.product?.objectType].filter(Boolean).join(' ');
+  return /(?:ifc\s*)?element\s*assembly|ifcelementassembly|\bassembly\b/i.test(kind);
+}
+function hasClass(obj){return !!(obj?.class||obj?.product?.objectType);}
+// API: PropertySet.name (not PropertySet.set); match only Tekla assembly's exact key.
+function castUnitMark(obj){
+  for(const pset of obj?.properties||[]){
+    if(squish(pset.name??pset.set??pset.propertySet)!=='teklaassembly')continue;
+    for(const prop of pset.properties||[]){
+      if(squish(prop.name)==='assemblycastunitmark')return normalize(prop.value);
+    }
+  }
+  return '';
+}
+
 function chooseModels(all){const id=$('modelSelect').value;return id?all.filter(o=>o.modelId===id):all;}
-async function findAssemblies(api){const objects=chooseModels(loadedObjectsToArray(await api.viewer.getObjects()));if(!objects.length)throw new Error('Geen objecten gevonden. Laad het IFC-model eerst in de 3D Viewer.');const candidates=objects.filter(x=>!hasClass(x)||isAssembly(x));const record=[];let done=0;for(const [modelId,map] of groupedByModel(candidates)){const ids=[...map.keys()];for(let i=0;i<ids.length;i+=100){const chunk=ids.slice(i,i+100);let rows=[];try{rows=await api.viewer.getObjectProperties(modelId,chunk);}catch(err){for(let j=0;j<chunk.length;j+=20){try{rows.push(...await api.viewer.getObjectProperties(modelId,chunk.slice(j,j+20)));}catch(e){console.warn('Property ophalen:',e);}}}for(const p of rows){const row={...map.get(p.id),...p,modelId};if(hasClass(row)&&!isAssembly(row))continue;const mark=castUnitMark(row);if(mark)record.push({...row,mark});}done+=chunk.length;setProgress(Math.round(8+39*done/Math.max(candidates.length,1)),`Assemblies analyseren… ${done}/${candidates.length}`);}}
- return record;}
+async function fetchProperties(api,modelId,ids){
+  if(!ids.length)return [];
+  try{return await api.viewer.getObjectProperties(modelId,ids)||[];}
+  catch(err){
+    if(ids.length<=1){console.warn('Properties niet beschikbaar:',modelId,ids[0],err);return [];}
+    const halfway=Math.ceil(ids.length/2);
+    const left=await fetchProperties(api,modelId,ids.slice(0,halfway));
+    const right=await fetchProperties(api,modelId,ids.slice(halfway));
+    return left.concat(right);
+  }
+}
+async function findAssemblies(api,wantedMarks){
+  const all=chooseModels(loadedObjectsToArray(await api.viewer.getObjects()));
+  if(!all.length)throw new Error('Geen objecten gevonden. Laad eerst het IFC-model in de 3D Viewer.');
+  const seen=new Map();const propertySetNames=new Set();let scanned=0;
+  const firstPass=all.filter(o=>isAssembly(o)||!hasClass(o)||!!castUnitMark(o));
+  const scan=async (objects,stepTitle,from,to)=>{
+    for(const [modelId,modelMap] of groupedByModel(objects)){
+      const rows=[...modelMap.values()];
+      for(let at=0;at<rows.length;at+=90){
+        const page=rows.slice(at,at+90);
+        const fetched=await fetchProperties(api,modelId,page.map(x=>x.id));
+        const byId=new Map(fetched.map(x=>[x.id,x]));
+        for(const o of page){
+          const p=byId.get(o.id)||{};
+          const merged={...o,...p,modelId,properties:p.properties?.length?p.properties:(o.properties||[])};
+          for(const ps of merged.properties||[])if(ps?.name)propertySetNames.add(ps.name);
+          // Reject recognisable unrelated element classes; no comment or part-property fallback.
+          if(hasClass(merged)&&!isAssembly(merged))continue;
+          const mark=castUnitMark(merged);
+          if(mark)seen.set(modelId+'::'+merged.id,{...merged,mark});
+        }
+        scanned+=page.length;
+        setProgress(Math.round(from+(to-from)*Math.min(1,scanned/Math.max(1,objects.length))),`${stepTitle}: ${scanned}/${objects.length}`);
+      }
+    }
+  };
+  // For speed check assembly candidates first. When loaded view omits IFC classes,
+  // or when too few marks match, inspect remaining objects as an explicit second pass.
+  await scan(firstPass,'Tekla-assemblies controleren',8,34);
+  const found=new Set([...seen.values()].map(x=>x.mark));
+  const notFound=[...wantedMarks].filter(m=>!found.has(m));
+  if(notFound.length && firstPass.length<all.length){
+    const keys=new Set(firstPass.map(x=>x.modelId+'::'+x.id));
+    const rest=all.filter(x=>!keys.has(x.modelId+'::'+x.id));
+    scanned=0;
+    await scan(rest,'Aanvullende assemblycontrole',35,50);
+  }
+  const results=[...seen.values()];
+  if(!results.length){
+    const examples=[...propertySetNames].slice(0,6);
+    throw new Error(`Geen assembly met Tekla Assembly / Assembly/Cast unit Mark gevonden. ${all.length} objecten gecontroleerd. ${examples.length?'Gevonden propertysets: '+examples.join(', ')+'. ':''}Controleer of de geladen modelversie Tekla Assembly-eigenschappen toont.`);
+  }
+  return results;
+}
+
 async function childrenOf(api,modelId,ids){try{const results=await api.viewer.getHierarchyChildren(modelId,ids,4,true);return uniq((results||[]).map(x=>x.id).filter(Number.isInteger));}catch(e){console.warn('Assemblyhiërarchie niet beschikbaar:',e);return [];}}
 async function savePreviousColors(api){state.originalColors=new Map();try{for(const row of loadedObjectsToArray(await api.viewer.getColoredObjects())){if(row.color)state.originalColors.set(row.modelId+'::'+row.id,row.color);}}catch(e){console.warn('Vorige kleuren konden niet worden gelezen:',e);}}
 async function removeLabels(){if(!state.api||!state.labelIds.length)return;try{await state.api.markup.removeMarkups(state.labelIds);}catch(e){console.warn('Labels verwijderen:',e);}state.labelIds=[];}
@@ -84,7 +150,7 @@ async function makeLabels(){await removeLabels();if(!$('labels').checked||!state
  const end={positionX:(ref.x+spread)*1000,positionY:(ref.y+spread*.35)*1000,positionZ:(ref.z+Math.max(1.6,ref.height*.6+1))*1000,type:'point'};
  try{const result=await api.markup.addTextMarkup([{start,end,text:g.label,color:hexRgba(g.color)}]);for(const row of result||[])if(Number.isInteger(row.id))state.labelIds.push(row.id);count++;}catch(e){errors.push(`${g.label}: ${e.message}`);}}
  if(errors.length)console.warn('Labelproblemen:',errors);return count;}
-async function colorNow(){if(state.busy)return;if(!state.api){setStatus('Open deze extensie in de 3D Viewer van Trimble Connect.','error');return;}isBusy(true);try{if(state.isApplied)await resetColoring(false);setProgress(4,'Objecten uit het geladen model verzamelen…');const assemblies=await findAssemblies(state.api);if(!assemblies.length)throw new Error('Geen IfcElementAssembly met Tekla Assembly / Assembly/Cast unit Mark gevonden.');const wanted=new Map();for(const g of state.shipments)for(const mark of g.marks)wanted.set(mark,g.number);const index=new Map(state.shipments.map(g=>[g.number,[]]));const markCounts=new Map(),extra=[];for(const a of assemblies){const number=wanted.get(a.mark);markCounts.set(a.mark,(markCounts.get(a.mark)||0)+1);if(number)index.get(number).push(a);else extra.push(a);}const matches=uniq(assemblies.filter(a=>wanted.has(a.mark)).map(a=>a.mark));const missing=[...wanted.keys()].filter(mark=>!matches.includes(mark));if(!matches.length)throw new Error('Geen overeenkomsten tussen PDF-elementnummers en assembly Cast Unit Marks. Controleer het gekozen model.');state.index=index;state.matchedMarks=new Set(matches);
+async function colorNow(){if(state.busy)return;if(!state.api){setStatus('Open deze extensie in de 3D Viewer van Trimble Connect.','error');return;}isBusy(true);try{if(state.isApplied)await resetColoring(false);setProgress(4,'Objecten uit het geladen model verzamelen…');if(!state.shipments.length)throw new Error('Importeer eerst een PDF-vrachtlijst.');const wantedMarks=new Set(state.shipments.flatMap(g=>g.marks));const assemblies=await findAssemblies(state.api,wantedMarks);if(!assemblies.length)throw new Error('Geen IfcElementAssembly met Tekla Assembly / Assembly/Cast unit Mark gevonden.');const wanted=new Map();for(const g of state.shipments)for(const mark of g.marks)wanted.set(mark,g.number);const index=new Map(state.shipments.map(g=>[g.number,[]]));const markCounts=new Map(),extra=[];for(const a of assemblies){const number=wanted.get(a.mark);markCounts.set(a.mark,(markCounts.get(a.mark)||0)+1);if(number)index.get(number).push(a);else extra.push(a);}const matches=uniq(assemblies.filter(a=>wanted.has(a.mark)).map(a=>a.mark));const missing=[...wanted.keys()].filter(mark=>!matches.includes(mark));if(!matches.length)throw new Error(`Er zijn ${assemblies.length} assemblies met Cast Unit Mark gevonden, maar geen overeenkomst met de PDF. Controleer of de PDF bij de geladen modelversie hoort.`);state.index=index;state.matchedMarks=new Set(matches);
  const duplicateMarks=[...markCounts].filter(([mark,count])=>wanted.has(mark)&&count>1).map(([mark,count])=>`${mark} (${count} assemblies)`);$('statMatched').textContent=matches.length;$('statMissing').textContent=missing.length;$('resultTag').textContent=`${matches.length}/${wanted.size} gekoppeld`;$('warnings').style.display=missing.length||duplicateMarks.length?'block':'none';$('warnings').textContent=(missing.length?'Niet gevonden in model: '+missing.join(', ')+'. ':'')+(duplicateMarks.length?'Dubbele Cast Unit Marks: '+duplicateMarks.join(', ')+'.':'');
  setProgress(54,'Vrachtkleuren voorbereiden…');await savePreviousColors(state.api);state.isApplied=true;for(let i=0;i<state.shipments.length;i++){const g=state.shipments[i];for(const [mid,map] of groupedByModel(index.get(g.number)||[])){const ids=[...map.keys()];const all=uniq([...ids,...await childrenOf(state.api,mid,ids)]);state.applied.set(`${g.number}::${mid}`,all);await state.api.viewer.setObjectState({modelObjectIds:[{modelId:mid,objectRuntimeIds:all,recursive:true}]},{color:g.color});}setProgress(57+Math.round(27*(i+1)/state.shipments.length),`${g.label} inkleuren…`);}
  if($('grey').checked)for(const [mid,map] of groupedByModel(extra)){const ids=[...map.keys()];const all=uniq([...ids,...await childrenOf(state.api,mid,ids)]);state.grey.push([mid,all]);await state.api.viewer.setObjectState({modelObjectIds:[{modelId:mid,objectRuntimeIds:all,recursive:true}]},{color:'#adb8c5'});}
@@ -95,16 +161,43 @@ function stopPlayback(){if(state.timer)clearInterval(state.timer);state.timer=nu
 async function goToStep(step){const max=state.shipments.length;state.step=Math.max(0,Math.min(step,max));$('timelineSlider').value=state.step;if(!state.step){$('timelineText').textContent='Alle vrachten';renderCards();if(state.api&&state.isApplied)try{await state.api.viewer.setSelection({modelObjectIds:[]},'set');}catch(e){}return;}await selectGroup(state.shipments[state.step-1],false);}
 function togglePlayback(){if(state.timer){stopPlayback();return;}if(!state.shipments.length)return;if(state.step>=state.shipments.length)state.step=0;$('play').textContent='Ⅱ';const tick=async()=>{if(state.step>=state.shipments.length){stopPlayback();return;}await goToStep(state.step+1);};tick();state.timer=setInterval(tick,2000);}
 async function refreshModels(){if(!state.api)return;try{const [specs,raw]=await Promise.all([state.api.viewer.getModels('loaded'),state.api.viewer.getObjects()]);const available=uniq((raw||[]).map(x=>x.modelId).filter(Boolean));state.availableModels=specs||[];const select=$('modelSelect'),prev=select.value;select.replaceChildren();const all=document.createElement('option');all.value='';all.textContent='Alle geladen modellen';select.append(all);for(const modelId of available){const spec=(specs||[]).find(m=>m.id===modelId||m.versionId===modelId);const opt=document.createElement('option');opt.value=modelId;opt.textContent=spec?.name||`Model ${modelId.slice(0,12)}...`;select.append(opt);}if([...select.options].some(o=>o.value===prev))select.value=prev;else if(available.length===1)select.value=available[0];$('modelState').textContent=available.length?`${available.length} model(len) geladen`:'Geen geladen modellen';$('modelState').className='tag'+(available.length?'':' warn');}catch(e){console.warn('Modelselectie:',e);$('modelState').textContent='Viewer beschikbaar';}}
-async function connect(){try{if(window.parent===window){$('connection').textContent='Voorbeeldmodus';setStatus('Voorbeeldmodus. Open via het manifest in Trimble Connect om echte IFC-assemblies te kleuren.','');return;}if(!window.TrimbleConnectWorkspace?.connect)throw new Error('Trimble Workspace API niet beschikbaar.');state.api=await window.TrimbleConnectWorkspace.connect(window.parent,()=>{});$('connection').textContent='Viewer verbonden';$('connection').className='pill ok';await refreshModels();setStatus('Viewer verbonden. Importeer een PDF of gebruik het voorbeeld en klik op “Koppel en kleur vrachten”.','success');}catch(e){state.api=null;$('connection').textContent='Geen verbinding';$('connection').className='pill off';setStatus('Open deze extensie in Trimble Connect: '+e.message,'error');}}
-async function pdfShipments(file){if(!window.pdfjsLib)throw new Error('PDF.js kon niet worden geladen. Controleer je internetverbinding.');const prefix=normalize($('prefix').value);if(!prefix)throw new Error('Vul een prefix in, bijvoorbeeld HYD.');const escaped=prefix.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');const re=new RegExp('\\b'+escaped+'[A-Z0-9_-]*\\d[A-Z0-9_-]*\\b','g');const lib=window.pdfjsLib;lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const pdf=await lib.getDocument({data:await file.arrayBuffer()}).promise;const byNumber=new Map();for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){const page=await pdf.getPage(pageNum);const content=await page.getTextContent();const text=content.items.map(x=>x.str).join(' ').replace(/\s+/g,' ');const load=text.match(/\bVracht\s*0*(\d{1,3})\b/i);if(!load)continue;const number=Number(load[1]);if(!number)continue;let region=text;const header=region.search(/\bElement\s*Nr\b/i);if(header>=0)region=region.slice(header);const end=region.search(/Meelever\s+artikelen/i);if(end>0)region=region.slice(0,end);let marks=uniq((region.toUpperCase().match(re)||[]).map(normalize));if(!marks.length)marks=uniq((text.toUpperCase().match(re)||[]).map(normalize));if(marks.length){const set=byNumber.get(number)||new Set();for(const mark of marks)set.add(mark);byNumber.set(number,set);}}
- if(!byNumber.size)throw new Error('Geen vrachtgroepen met elementnummers gevonden. Controleer PDF-opmaak en prefix.');return normaliseShipments([...byNumber].map(([number,marks])=>({number,marks:[...marks]})));}
-async function handlePdf(file){if(!file)return;stopPlayback();try{setStatus('PDF-vrachtlijst wordt lokaal gelezen...');const groups=await pdfShipments(file);if(state.isApplied)await resetColoring(false);setShipments(groups);$('pdfTitle').textContent=file.name;$('pdfDetail').textContent=groups.reduce((n,g)=>n+g.marks.length,0)+' elementnummers · '+groups.length+' vrachten gevonden';$('sourceTag').textContent='PDF geïmporteerd';setStatus('PDF ingelezen. Controleer de vrachten in de lijst en klik daarna op “Koppel en kleur vrachten”.','success');}catch(e){setStatus('PDF kon niet worden ingelezen: '+e.message,'error');}}
+async function connect(){try{if(window.parent===window){$('connection').textContent='Niet in Trimble';setStatus('Open deze extensie via het manifest in Trimble Connect. Importeer daarna een vrachtlijst.','');return;}if(!window.TrimbleConnectWorkspace?.connect)throw new Error('Trimble Workspace API niet beschikbaar.');state.api=await window.TrimbleConnectWorkspace.connect(window.parent,()=>{});$('connection').textContent='Viewer verbonden';$('connection').className='pill ok';await refreshModels();setStatus('Viewer verbonden. Importeer een PDF-vrachtlijst om te starten.','success');}catch(e){state.api=null;$('connection').textContent='Geen verbinding';$('connection').className='pill off';setStatus('Open deze extensie in Trimble Connect: '+e.message,'error');}}
+async function pdfShipments(file){
+  if(!window.pdfjsLib)throw new Error('PDF.js kon niet worden geladen. Controleer de internetverbinding.');
+  const lib=window.pdfjsLib;
+  lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const pdf=await lib.getDocument({data:await file.arrayBuffer()}).promise;
+  const perVracht=new Map();
+  // No prefix needed. Extract full element IDs from the ElementNr column,
+  // excluding freight metadata, weights and delivery-note numbers.
+  const markPattern=/\b[A-Z]{2,10}[-_]?\d{2,8}[A-Z0-9_-]*\b/g;
+  for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
+    const page=await pdf.getPage(pageNum);
+    const data=await page.getTextContent();
+    const text=data.items.map(x=>x.str||'').join(' ').replace(/\s+/g,' ');
+    const vracht=text.match(/\bVracht\s*0*(\d{1,3})\b/i);
+    if(!vracht)continue; // ignores first 'meeleverartikelen' page
+    const number=Number(vracht[1]);if(!number)continue;
+    const begin=text.search(/\bElement\s*Nr\b/i);
+    if(begin<0)continue;
+    const after=text.slice(begin).replace(/\s+/g,' ');
+    const stop=after.search(/Meelever\s+artikelen/i);
+    const region=stop>0?after.slice(0,stop):after;
+    const marks=uniq((region.toUpperCase().match(markPattern)||[]).map(normalize));
+    if(!marks.length)continue;
+    if(!perVracht.has(number))perVracht.set(number,new Set());
+    marks.forEach(m=>perVracht.get(number).add(m));
+  }
+  if(!perVracht.size)throw new Error('Geen vrachten met elementnummers gevonden. Gebruik een tekst-PDF met kolom ElementNr en kopjes Vracht 01, Vracht 02 enz.');
+  return normaliseShipments([...perVracht].map(([number,marks])=>({number,marks:[...marks]})));
+}
+
+async function handlePdf(file){if(!file)return;stopPlayback();try{setStatus('PDF-vrachtlijst wordt lokaal gelezen...');const groups=await pdfShipments(file);if(state.isApplied)await resetColoring(false);setShipments(groups);$('pdfTitle').textContent=file.name;$('pdfDetail').textContent=groups.reduce((n,g)=>n+g.marks.length,0)+' elementnummers · '+groups.length+' vrachten gevonden';$('sourceTag').textContent='PDF ingelezen';$('sourceTag').className='tag';setStatus('PDF ingelezen. Controleer de vrachten in de lijst en klik daarna op “Koppel en kleur vrachten”.','success');}catch(e){setStatus('PDF kon niet worden ingelezen: '+e.message,'error');}}
 $('pdfFile').onchange=e=>handlePdf(e.target.files?.[0]);const drop=$('dropzone');drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag');};drop.ondragleave=()=>drop.classList.remove('drag');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');handlePdf(e.dataTransfer.files?.[0]);};
-$('sampleBtn').onclick=async()=>{if(state.isApplied)await resetColoring(false);setShipments(SAMPLE);$('prefix').value='HYD';$('pdfTitle').textContent='OR20250240 Hydroos — 12 vrachten';$('pdfDetail').textContent='72 elementen vooraf ingeladen · klik of sleep een PDF hierheen';$('sourceTag').textContent='Hydroos-voorbeeld';setStatus('Voorbeeldvrachtlijst hersteld.','success');};
 $('runBtn').onclick=colorNow;$('resetBtn').onclick=async()=>{if(state.busy)return;isBusy(true);try{await resetColoring();}finally{isBusy(false);}};
 $('reconnectBtn').onclick=async()=>{if(!state.api)await connect();else await refreshModels();};$('labels').onchange=async()=>{if(state.api&&state.isApplied){try{await makeLabels();}catch(e){setStatus('Labels bijwerken mislukt: '+e.message,'error');}}};
 $('timelineSlider').oninput=e=>goToStep(Number(e.target.value));$('first').onclick=()=>{stopPlayback();goToStep(0);};$('prev').onclick=()=>{stopPlayback();goToStep(state.step-1);};$('next').onclick=()=>{stopPlayback();goToStep(state.step+1);};$('play').onclick=togglePlayback;$('allBtn').onclick=()=>{stopPlayback();goToStep(0);};
-setShipments(SAMPLE);connect();
+setShipments([]);connect();
 </script>
 </body>
 </html>
