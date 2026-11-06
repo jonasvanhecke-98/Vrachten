@@ -1,8 +1,8 @@
 {
   "title": "Vrachtplanner",
-  "description": "Importeer een PDF-vrachtlijst, koppel elementnummers aan de Cast Unit Mark van Tekla-assemblies en visualiseer vrachten met kleuren en één label per vracht.",
-  "url": "https://ictaltez.github.io/Vrachten/index.html",
-  "icon": "https://ictaltez.github.io/Vrachten/icon.svg",
+  "description": "Importeer een PDF-vrachtlijst en kleur Tekla-assemblies op basis van Cast Unit Mark en vrachtnummer.",
+  "url": "https://jonasvanhecke-98.github.io/Vrachten/index.html",
+  "icon": "https://jonasvanhecke-98.github.io/Vrachten/icon.svg",
   "enabled": true,
   "extensionType": ["3dviewer"]
 }
